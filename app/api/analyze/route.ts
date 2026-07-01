@@ -1,4 +1,4 @@
-import { MODEL_NAME, SYSTEM_PROMPT, genAI } from "@/lib/gemini";
+import { MODEL_NAME, SYSTEM_PROMPT, getGeminiClient } from "@/lib/gemini";
 import { AnalysisResult } from "@/types/analysis";
 
 export const dynamic = "force-dynamic";
@@ -42,6 +42,7 @@ export async function POST(request: Request) {
     const base64Data = buffer.toString("base64");
 
     // Call Gemini Vision API
+    const genAI = getGeminiClient();
     const model = genAI.getGenerativeModel({
       model: MODEL_NAME,
       systemInstruction: SYSTEM_PROMPT,
