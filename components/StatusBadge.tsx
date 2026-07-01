@@ -1,12 +1,13 @@
 import { clsx } from "clsx";
 
 interface StatusBadgeProps {
-  status: "Sehat" | "Sakit";
+  status: "Sehat" | "Sakit" | "Normal";
   className?: string;
 }
 
 export default function StatusBadge({ status, className }: StatusBadgeProps) {
   const isSehat = status === "Sehat";
+  const isNormal = status === "Normal";
 
   return (
     <div
@@ -15,6 +16,8 @@ export default function StatusBadge({ status, className }: StatusBadgeProps) {
         "border backdrop-blur-sm relative overflow-hidden",
         isSehat
           ? "bg-emerald-500/20 border-emerald-400/40 text-emerald-300"
+          : isNormal
+          ? "bg-slate-500/20 border-slate-400/40 text-slate-300"
           : "bg-red-500/20 border-red-400/40 text-red-300",
         className
       )}
@@ -28,19 +31,31 @@ export default function StatusBadge({ status, className }: StatusBadgeProps) {
         <span
           className={clsx(
             "absolute inline-flex w-full h-full rounded-full opacity-75 animate-ping",
-            isSehat ? "bg-emerald-400" : "bg-red-400"
+            isSehat
+              ? "bg-emerald-400"
+              : isNormal
+              ? "bg-slate-400"
+              : "bg-red-400"
           )}
         />
         <span
           className={clsx(
             "relative inline-flex w-2.5 h-2.5 rounded-full",
-            isSehat ? "bg-emerald-400" : "bg-red-400"
+            isSehat
+              ? "bg-emerald-400"
+              : isNormal
+              ? "bg-slate-400"
+              : "bg-red-400"
           )}
         />
       </div>
 
       <span className="tracking-wide">
-        {isSehat ? "✓ Sehat" : "✗ Terdeteksi Penyakit"}
+        {isSehat
+          ? "✓ Sehat"
+          : isNormal
+          ? "• Normal"
+          : "✗ Terdeteksi Penyakit"}
       </span>
     </div>
   );
